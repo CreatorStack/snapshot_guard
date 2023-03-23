@@ -1,14 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rxdart/src/subjects/behavior_subject.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:snapshot_guard/snapshot_guard.dart';
 import 'package:snapshot_guard/snapshot_guard_platform_interface.dart';
 import 'package:snapshot_guard/snapshot_guard_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockSnapshotGuardPlatform
-    with MockPlatformInterfaceMixin
-    implements SnapshotGuardPlatform {
-
+class MockSnapshotGuardPlatform with MockPlatformInterfaceMixin implements SnapshotGuardPlatform {
   final BehaviorSubject<bool> _guardStatusSubject = BehaviorSubject.seeded(false);
 
   @override
@@ -17,15 +14,14 @@ class MockSnapshotGuardPlatform
   @override
   Stream<bool> get guardStatusStream => _guardStatusSubject.stream;
 
-  
   @override
   Future<bool?> switchGuardStatus(bool status) {
     _guardStatusSubject.add(status);
     return Future.value(status);
   }
-  
+
   @override
-  bool get isGuardEnabled => _guardStatusSubject.value;
+  bool get isGuardEnabled => _guardStatusSubject.value!;
 }
 
 void main() {

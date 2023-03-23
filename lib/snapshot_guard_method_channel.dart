@@ -10,8 +10,7 @@ class MethodChannelSnapshotGuard extends SnapshotGuardPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('snapshot_guard');
 
-  final BehaviorSubject<bool> _guardStatusSubject =
-      BehaviorSubject.seeded(false);
+  final BehaviorSubject<bool> _guardStatusSubject = BehaviorSubject.seeded(false);
 
   @override
   Future<bool?> toggleGuard() async {
@@ -28,11 +27,9 @@ class MethodChannelSnapshotGuard extends SnapshotGuardPlatform {
     return result;
   }
 
-
-
   @override
   Stream<bool> get guardStatusStream => _guardStatusSubject.stream;
-  
+
   @override
-  bool get isGuardEnabled => _guardStatusSubject.value;
+  bool get isGuardEnabled => _guardStatusSubject.value!;
 }
