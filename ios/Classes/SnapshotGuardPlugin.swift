@@ -10,7 +10,6 @@ public class SnapshotGuardPlugin: NSObject, FlutterPlugin {
     let instance = SnapshotGuardPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
     registrar.addApplicationDelegate(instance)
-      instance.addSecuredView()
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -48,8 +47,10 @@ public class SnapshotGuardPlugin: NSObject, FlutterPlugin {
         }
 
     }
-    private func addSecuredView() {
-        if let window = UIApplication.shared.delegate?.window as? UIWindow {
+    
+    public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [AnyHashable : Any] = [:]) -> Bool {
+        
+        if let window = application.delegate?.window as? UIWindow {
             if (!window.subviews.contains(field)) {
                 window.addSubview(field)
                 field.centerYAnchor.constraint(equalTo: window.centerYAnchor).isActive = true
@@ -59,8 +60,7 @@ public class SnapshotGuardPlugin: NSObject, FlutterPlugin {
                 debugPrint("something")
             }
         }
-  
-        
+        return true
     }
 }
 
